@@ -1,10 +1,10 @@
-	<section class="h-full flex">
-		<div class="p-8 rounded border border-gray-200">
-			<h1 class="text-xl text-center font-bold leading-tight tracking-tight text-red-400 md:text-2xl dark:text-white">Ajouter un article</h1>
-			<div>
-				<p class="text-red-500 mt-1 text-center text-sm" id='message_form_register'>&nbsp;</p>
-			</div>
-			{{ form_start(articleForm, {
+<section class="h-full flex">
+	<div class="p-8 rounded border border-gray-200">
+		<h1 class="text-xl text-center font-bold leading-tight tracking-tight text-red-400 md:text-2xl dark:text-white">Ajouter un article</h1>
+		<div>
+			<p class="text-red-500 mt-1 text-center text-sm" id='message_form_register'>&nbsp;</p>
+		</div>
+		{{ form_start(articleForm, {
 				  attr: {
 					novalidate: "novalidate",
 					class: "space-y-4 md:space-y-6",
@@ -12,40 +12,42 @@
 				  }
 				})
 			  }}
-			
-				<div class="w-full max-w-sm min-w-[925px]">
-					{{ form_label(articleForm.titre)}}
-					{{ form_widget(articleForm.titre)}}
-					{{ form_errors(articleForm.titre)}}
-				</div>
-			
-			
-				<div class="w-full max-w-sm min-w-[925px]">
-					{{ form_label(articleForm.contenu)}}
-					{{ form_widget(articleForm.contenu)}}
-					{{ form_errors(articleForm.contenu)}}
-				</div>
-				<div class="w-full max-w-sm min-w-[462px]">
-					{{ form_label(articleForm.featuredImage)}}
-					{{ form_widget(articleForm.featuredImage)}}
-					{{ form_errors(articleForm.featuredImage)}}
-				</div>
-			
-				<div class="w-full max-w-sm min-w-[925px]">
-					{{ form_label(articleForm.category)}}
-					{{ form_widget(articleForm.category)}}
-					{{ form_errors(articleForm.category)}}
-				</div>
-		
-				<div class="w-full max-w-sm min-w-[925px]">
-					{{ form_label(articleForm.keyword)}}
-					{{ form_widget(articleForm.keyword)}}
-					{{ form_errors(articleForm.keyword)}}
-				</div>
-				<div>
-					<button class="w-25 btn-warning" type="submit">Ajouter</button>
-				</div>
-			
-			{{ form_end(articleForm)}}
+
+		<div class="w-full max-w-sm min-w-[925px]">
+			{{ form_label(articleForm.titre)}}
+			{{ form_widget(articleForm.titre)}}
+			{{ form_errors(articleForm.titre)}}
 		</div>
-	</section>
+
+
+		<div class="w-full max-w-sm min-w-[925px]">
+			{{ form_label(articleForm.contenu)}}
+			{{ form_widget(articleForm.contenu)}}
+			{{ form_errors(articleForm.contenu)}}
+		</div>
+		<div class="w-full max-w-sm min-w-[925px]">
+			{{ form_label(articleForm.category)}}
+			{{ form_widget(articleForm.category)}}
+			{{ form_errors(articleForm.category)}}
+		</div>
+
+		<div class="w-full max-w-sm min-w-[925px]">
+			{{ form_label(articleForm.keyword)}}
+			{{ form_widget(articleForm.keyword)}}
+			{{ form_errors(articleForm.keyword)}}
+		</div>
+		<div class="w-full max-w-sm min-w-[462px]">
+			{{ form_label(articleForm.featuredImage)}}
+			{{ form_widget(articleForm.featuredImage)}}
+			{{ form_errors(articleForm.featuredImage)}}
+			<div class="preview" style="display-none">
+				<img id="imagepreview" width="300" />
+			</div>
+		</div>
+		<div>
+			<button class="w-25 btn-warning" type="submit">Ajouter</button>
+		</div>
+
+		{{ form_end(articleForm)}}
+	</div>
+</section>

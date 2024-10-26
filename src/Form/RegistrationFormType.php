@@ -36,6 +36,7 @@ class RegistrationFormType extends AbstractType
                         new NotBlank(message: ""),
                         new Length(['max' => 180, 'maxMessage' => '']),
                         new Email(message: '')
+                        
                     ])
                 ]
             ])

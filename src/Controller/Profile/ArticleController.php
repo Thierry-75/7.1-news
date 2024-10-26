@@ -5,6 +5,7 @@ namespace App\Controller\Profile;
 use App\Entity\Article;
 use App\Form\AddArticleFormType;
 use App\Repository\UserRepository;
+use App\Service\PhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,12 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/add', name: 'add', methods:['GET','POST'])]
-    public function addArticle(Request $request,ValidatorInterface $validator,SluggerInterface $slugger,EntityManagerInterface $em,UserRepository $userRepository): Response
+    public function addArticle(Request $request,
+    ValidatorInterface $validator,
+    SluggerInterface $slugger,
+    EntityManagerInterface $em,
+    PhotoService $photoService,
+    ): Response
     {
         $article = new Article();
         $articleForm = $this->createForm(AddArticleFormType::class,$article);
@@ -39,8 +45,10 @@ class ArticleController extends AbstractController
             if($articleForm->isSubmitted() && $articleForm->isValid()){
                 $slug = strtolower($slugger->slug($article->getTitre()));
                 $article->setSlug($slug);
-                $article->setUser($userRepository->find(4));
-                $article->setFeaturedImage('default.webp');
+                $article->setUser($this->getUser());
+                $featuredImage = $articleForm->get('featuredImage')->getData();
+                $image = $photoService->add($featuredImage,'articles',640,480);
+                $article->setFeaturedImage($image);
                 $em->persist($article);
                 $em->flush();
                 $this->addFlash('alert-success','L\'article a bien été créé');

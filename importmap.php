@@ -32,5 +32,10 @@ return [
     'controlForm'=>[
         'path' =>  './assets/js/controlFormulaires.js',
         'entrypoint' => true,
+    ],
+    'add-article'=>[
+        'path' => './assets/js/add_article.js',
+        'entrypoint' => true,
     ]
+
 ];
