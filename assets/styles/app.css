@@ -85,4 +85,14 @@
     overflow: hidden;
     transform: translateY(-10%);
   }
+
+  .text-red {
+    color: red;
+  }
+  .text-orange {
+    color: orange;
+  }
+  .text-green {
+    color: green;
+  }
 }

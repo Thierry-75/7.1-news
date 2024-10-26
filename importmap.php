@@ -25,4 +25,12 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'alert'=>[
+        'path'=>'./assets/js/alert.js',
+        'entrypoint' => true, 
+    ],
+    'controlForm'=>[
+        'path' =>  './assets/js/controlFormulaires.js',
+        'entrypoint' => true,
+    ]
 ];

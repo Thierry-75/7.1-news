@@ -29,16 +29,20 @@ class AddCategoryFormType extends AbstractType
             'constraints' => [
                 new Sequentially([
                     new NotBlank(message: ''),
-                    new Length(['min' => 2, 'max' =>30, 'minMessage'=>'minimum 2 lettres', 'maxMessage'=>'30' ]),
+                    new Length(['min' => 2, 'max' =>50, 'minMessage'=>'minimum 2 lettres', 'maxMessage'=>'50' ]),
                     new Regex(
-                        pattern:'/^[a-zA-Z- \'éèçï]{2,30}$/i',
-                        htmlPattern: '^[a-zA-Z- \'éèçï]{2,30}$'
+                        pattern:'/^[a-zA-Z- \'éèêàçï]{2,50}$/i',
+                        htmlPattern: '^[a-zA-Z- \'éèêàçï]{2,50}$'
                     )
                 ])
             ]
                ])
-            ->add('parent', EntityType::class, [
+            ->add('parent', EntityType::class,[ 'attr'=>['class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
+              focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+               dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
                 'class' => Category::class,
+                'label'=>'Parent :',
+                'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'choice_label' => 'name',
                 'placeholder' => '--- Aucun parent---',
                 'required'=>false,

@@ -1,5 +1,9 @@
-{% extends 'base.html.twig' %} {% block title %}inscription{% endblock %} {%
-block body %}
+{% extends 'base.html.twig' %} {% block title %}inscription{% endblock %} 
+{% block importmap %}
+    {{ parent() }}
+    {{ importmap('controlForm') }}
+{% endblock %}
+{% block body %}
 
 <section class="bg-indigo-50 dark:bg-blue-900">
   <div

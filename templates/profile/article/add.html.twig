@@ -4,12 +4,12 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mx-auto px-4">
-		<div class="grid grid-cols-8 gap-4">
+	<div class="container mx-auto px-2">
+		<div class="grid grid-cols-6 gap-4">
 			{% block left %}
 				{% include('profile/article/side.html.twig') %}
 			{% endblock %}
-			<div class="col-start-3 col-span-4">
+			<div class="col-start-2 col-span-4">
 				{% block center %}
 					{% include 'profile/article/add_form.html.twig' %}
 				{% endblock %}

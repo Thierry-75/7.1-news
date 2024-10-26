@@ -15,6 +15,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Sequentially;
+use Webmozart\Assert\Assert;
 
 class AddArticleFormType extends AbstractType
 {
@@ -25,35 +31,75 @@ class AddArticleFormType extends AbstractType
             'attr' => ['class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
               focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => ''],
-            "label"=>"Titre de l\'article :",
+            "label"=>"Titre de l'article :",
             'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
+            'constraints'=>new Sequentially(
+                [
+                    new NotBlank(message:''),
+                    new Length(['min'=>10,'max'=>255,'minMessage'=>'10 caractères','maxMessage'=>'max 255 caractères'])
+                ]
+            )
                ])
             ->add('contenu',TextareaType::class,[
                 'attr' => ['class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => ''],
-                "label"=>"Contenu de l\'article :",
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => '',
+                   'rows'=>5],
+                "label"=>"Contenu de l'article :",
                 'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
-                   ])
-            ->add('featuredImage',FileType::class,['attr'=>['class'=>'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'],
+                'constraints'=>[new NotBlank(message:'')]
+                ])
+            ->add('featuredImage',FileType::class,['attr'=>['class'=>'block w-full text-sm text-gray-900 border 
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700
+             dark:border-gray-600 dark:placeholder-gray-400'],
             'label'=>false,
-            'label_attr'=>['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white'],
             'mapped'=>false,
-            'required'=>false
+            'required'=>false,
+            'label'=>'Photo d\'illustration',
+            'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
+            'constraints'=>[
+                new Image([
+                    'maxSize'=>'5M',
+                    'mimeTypes'=> [
+                        'image/jpeg',
+                        'image/png'
+                    ],
+                    'mimeTypesMessage'=>'Veuillez télécharger une image aui format JPEG ou PNG',
+                    'minWidth'=>200,
+                    'maxWidth'=>4000,
+                    'minHeight'=>200,
+                    'maxHeight'=>4000,
+                    'allowPortrait'=>false,
+                    'allowLandscape'=>true
+                ]),
+            ]
+          
         ])
-            ->add('category', EntityType::class,[
+            ->add('category', EntityType::class,['attr'=>[ 'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
                 'class' => Category::class,
+                'label'=>'Catégories :',
                 'choice_label' => 'name',
                 'multiple' => true,
-                'expanded'=>true,
-                'label_attr'=>['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']
+                'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
+                'constraints'=>[
+                    new NotNull(['message'=>'']),
+                    new NotBlank(['message'=>''])
+                ]
             ],)
-            ->add('keyword', EntityType::class, [
+            ->add('keyword', EntityType::class, ['attr'=>['class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
                 'class' => Keyword::class,
+                'label'=>'Mots clés :',
                 'choice_label' => 'name',
                 'multiple' => true,
-                'expanded'=>true,
-                'label_attr'=>['class'=>'block mb-2 text-sm font-medium text-gray-900 dark:text-white']
+                'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
+                'constraints'=>[
+                    new NotNull(['message'=>'']),
+                    new NotBlank(['message'=>''])
+                ]
             ])
             ->addEventListener(FormEvents::POST_SUBMIT,$this->addDate(...))
         ;

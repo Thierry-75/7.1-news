@@ -1,5 +1,7 @@
 window.onload = () => {
   /*---------------formulaire register.html.twig----------*/
+
+  
   let registration_form = document.querySelector('#registration_form');
   if(registration_form){
       let message_form_inscription = document.querySelector('#message_form_inscription');

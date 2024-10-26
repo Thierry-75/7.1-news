@@ -27,10 +27,10 @@ class AddKeywordFormType extends AbstractType
             'constraints' => [
                 new Sequentially([
                     new NotBlank(message: ''),
-                    new Length(['min' => 2, 'max' =>30, 'minMessage'=>'minimum 2 lettres', 'maxMessage'=>'30' ]),
+                    new Length(['min' => 2, 'max' =>50, 'minMessage'=>'minimum 2 lettres', 'maxMessage'=>'max 50 lettres ' ]),
                     new Regex(
-                        pattern:'/^[a-zA-Z- \'éèçï]{2,30}$/i',
-                        htmlPattern: '^[a-zA-Z- \'éèçï]{2,30}$'
+                        pattern:'/^[a-zA-Z- \'éèêàçï]{2,50}$/i',
+                        htmlPattern: '^[a-zA-Z- \'éèêàçï]{2,50}$'
                     )
                 ])
             ]

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\DataFixtures;
 
 use App\Entity\Keyword;
@@ -17,14 +18,14 @@ class KeywordFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $keywords = ['France', 'Politique', 'Monde', 'Informatique', 'Économie', 'Association'];
+        $keywords = ['Economie', 'Politique', 'Géographie', 'Science', 'Histoire', 'Philosophie'];
 
         foreach ($keywords as $keywordName) {
             $keyword = new Keyword();
             $keyword->setName($keywordName);
             $slug = strtolower($this->slugger->slug($keywordName));
             $keyword->setSlug($slug);
-            
+
             $manager->persist($keyword);
         }
 
