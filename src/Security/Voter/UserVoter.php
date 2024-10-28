@@ -56,7 +56,7 @@ class UserVoter extends Voter
         return $this->security->isGranted('ROLE_USER');
     }
     private function canUpdate(){
-        return $this->security->isGranted('ROLE_REDACTEUR');
+        return $this->security->isGranted('ROLE_REDACTOR');
     }
     private function canDelete(){
         return $this->security->isGranted('ROLE_ADMIN');

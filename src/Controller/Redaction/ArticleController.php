@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Profile;
+namespace App\Controller\Redaction;
 
 use App\Entity\Article;
 use App\Entity\Photo;
@@ -15,16 +15,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-#[Route('/profile/article',name:'app_profile_article_')]
+#[Route('/redaction/article',name:'app_profile_article_')]
 class ArticleController extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(): Response
-    {
-        return $this->render('profile/article/index.html.twig', [
-            'controller_name' => 'ArticleController',
-        ]);
-    }
 
     #[Route('/add', name: 'add', methods:['GET','POST'])]
     public function addArticle(Request $request,
@@ -34,13 +27,18 @@ class ArticleController extends AbstractController
     PhotoService $photoService,
     ): Response
     {
+
+        if($this->denyAccessUnlessGranted('ROLE_REDACTOR')){
+            $this->addFlash('alert-danger','Vous devez être connecté pour accéder à cette page');
+            return $this->redirectToRoute('app_main');
+        }
         $article = new Article();
         $articleForm = $this->createForm(AddArticleFormType::class,$article);
         $articleForm->handleRequest($request);
         if($request->isMethod('POST')){
             $errors = $validator->validate($request);
             if(count($errors)>0){
-                return $this->render('profile/article/add.html.twig',['articleForm'=>$articleForm->createView(),'errors'=>$errors]);
+                return $this->render('redaction/article/add.html.twig',['articleForm'=>$articleForm->createView(),'errors'=>$errors]);
             }
             if($articleForm->isSubmitted() && $articleForm->isValid()){
                 $slug = strtolower($slugger->slug($article->getTitre()));
@@ -60,7 +58,7 @@ class ArticleController extends AbstractController
                 return $this->redirectToRoute('app_profile_article_index');
             }
         }
-        return $this->render('profile/article/add.html.twig', [
+        return $this->render('redaction/article/add.html.twig', [
             'articleForm'=>$articleForm->createView()
         ]);
     }

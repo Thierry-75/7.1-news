@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}update profil:
+	{{app.user.pseudo}}
+{% endblock %}
+{% block importmap %}
+    {{ importmap(['app', 'add-article' ]) }}
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-blue-600 text-center">Mise à jour du profil :
+		{{app.user.pseudo}}</h1>
+	<div>
+		<p id="message_form_update"></p>
+	</div>
+	{{
+          form_start(form, {
+            attr: {
+              novalidate: "novalidate",
+              class: "space-y-4 md:space-y-6",
+              id: "registration_form"
+            }
+          })
+        }}
+	<div>
+		{{ form_label(form.pseudo) }}
+		{{ form_widget(form.pseudo) }}
+		<div class="text-sm text-red-700">
+			{{ form_errors(form.pseudo) }}
+			<small id="pseudoSmall"></small>
+		</div>
+	</div>
+	<div>
+		{{ form_label(form.zip) }}
+		{{ form_widget(form.zip) }}
+		<div class="text-sm text-red-700">
+			{{ form_errors(form.zip) }}
+			<small id="zipSmall"></small>
+		</div>
+	</div>
+	<div>
+		{{ form_label(form.city) }}
+		{{ form_widget(form.city) }}
+		<div class="text-sm text-red-700">
+			{{ form_errors(form.city) }}
+			<small id="citySmall"></small>
+		</div>
+	</div>
+	<div>
+		{{ form_label(form.avatar) }}
+		{{ form_widget(form.avatar) }}
+		<div class="text-sm text-red-700">
+			{{ form_errors(form.avatar) }}
+			<small id="avatarSmall"></small>
+		</div>
+    			<div class="preview" >
+				<img id="imagePreview" width="150">
+			</div>
+	</div>
+	<button type="submit" id="registration_form_submit" class="w-full btn-info">
+		Confirmer
+	</button>
+	{{ form_end(form) }}
+
+{% endblock %}

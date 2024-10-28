@@ -17,8 +17,7 @@
       encore_entry_script_tags("app")
     }}
     {% block importmap %}
-    {{ importmap("app") }}
-    {{ importmap('alert') }}
+    {{ importmap(["app","alert"]) }}
     {% endblock %} 
 
     {% endblock %}

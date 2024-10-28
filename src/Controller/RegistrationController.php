@@ -119,10 +119,10 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        if(!$checkmail->confirmationEmail($this->getUser())){
+      /**  if(!$checkmail->confirmationEmail($this->getUser())){
             $this->addFlash('alert-warning', 'Ce compte est déjà activé !');
             return $this->redirectToRoute('app_main');  // redirect to profil
-        }        
+        }*/        
         //generate jwt
         $header = [
             'typ' => 'JWT',

@@ -68,7 +68,7 @@ class CreateRedactorCommand extends Command
                 ->setEmail($email)
                 ->setPlainpassword($plainPassword)
                 ->setPseudo($pseudo)
-                ->setRoles(['ROLE_USER','ROLE_REDACTEUR'])
+                ->setRoles(['ROLE_USER','ROLE_REDACTOR'])
                 ->setZip($zip)
                 ->setCity($city)
                 ->setCreateAt(new \DateTimeImmutable())

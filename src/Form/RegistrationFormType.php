@@ -84,10 +84,10 @@ class RegistrationFormType extends AbstractType
                             pattern: '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,12}$/i',
                             htmlPattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,12}$'
                         ),
-/*                        new PasswordStrength([
-                            'minScore'=>4,
+                        new PasswordStrength([
+                            'minScore'=>3,
                             'message'=>'votre mot de passe est trop faible. Veuillez inclure des lettres, deschiffres et des symboles.'
-                        ])*/
+                        ])
                     ])
                 ],
             ])

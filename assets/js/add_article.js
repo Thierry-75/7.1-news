@@ -1,10 +1,11 @@
-document.querySelector("#add_article_form_featuredImage").addEventListener("change", checkFile);
+//document.querySelector("#add_article_form_featuredImage").addEventListener("change", checkFile);
+document.querySelector("#update_profil_form_avatar").addEventListener("change", checkFile);
 
 function checkFile(){
     let preview = document.querySelector(".preview");
     let image = preview.querySelector("img");
     let file = this.files[0];
-    const types = ["image/jpeg", "image/png", "image/webp"];
+    const types = ["image/jpeg", "image/webp"];
     let reader = new FileReader();
 
     reader.onloadend = function(){
