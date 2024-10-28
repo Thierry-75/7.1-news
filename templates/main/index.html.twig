@@ -1,4 +1,44 @@
-{% extends 'base.html.twig' %} {% block title %}Accueil{% endblock
-%} {% block body %}
-<section class=""></section>
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <header>
+        <div>
+            <!--<img src="{# asset('uploads/articles/') ~ lastArticle.featuredImage #}" alt="{{ lastArticle.titre }}">-->
+            <img src="#" alt="{{ lastArticle.titre }}">
+        </div>
+        <div>
+            {% for category in lastArticle.category %}
+                <span>{{ category.name }}</span>
+            {% endfor %}
+        </div>
+        <h3>{{ lastArticle.titre }}</h3>
+        <div>{{ lastArticle.contenu }}</div>
+        <p>{{ lastArticle.user.pseudo }}</p>
+    </header>
+    <main>
+        <section>
+            <h2>Derniers articles</h2>
+            {% for article in articles %}
+                <div>
+                    <!--<img src="{# asset('uploads/articles/mini/300x300-') ~ article.featuredImage #}" alt="{{ article.titre }}">-->
+                     <img src="#" alt="{{ article.titre }}">
+                </div>
+                <div>
+                    {% for category in article.category %}
+                        <span>{{ category.name }}</span>
+                    {% endfor %}
+                </div>
+                <h3>{{ article.titre }}</h3>
+                <p>{{ article.user.pseudo }}</p>
+            {% endfor %}
+        </section>
+        <section>
+            <h2>Auteurs actifs</h2>
+            {% for author in authors %}
+                <h3>{{ author[0].pseudo }} {{author.total}}</h3>
+            {% endfor %}
+        </section>
+    </main>
 {% endblock %}

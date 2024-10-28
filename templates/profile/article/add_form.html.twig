@@ -1,4 +1,4 @@
-<section class="h-full flex">
+
 	<div class="p-8 rounded border border-gray-200">
 		<h1 class="text-xl text-center font-bold leading-tight tracking-tight text-red-400 md:text-2xl dark:text-white">Ajouter un article</h1>
 		<div>
@@ -37,9 +37,9 @@
 			{{ form_errors(articleForm.keyword)}}
 		</div>
 		<div class="w-full max-w-sm min-w-[462px]">
-			{{ form_label(articleForm.featuredImage)}}
-			{{ form_widget(articleForm.featuredImage)}}
-			{{ form_errors(articleForm.featuredImage)}}
+			{{ form_label(articleForm.photo)}}
+			{{ form_widget(articleForm.photo)}}
+			{{ form_errors(articleForm.photo)}}
 			<div class="preview" style="display-none">
 				<img id="imagepreview" width="300" />
 			</div>
@@ -50,4 +50,4 @@
 
 		{{ form_end(articleForm)}}
 	</div>
-</section>
+

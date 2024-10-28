@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Validator\Constraints\Sequentially;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
 
@@ -83,10 +84,10 @@ class RegistrationFormType extends AbstractType
                             pattern: '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,12}$/i',
                             htmlPattern: '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,12}$'
                         ),
-                        new PasswordStrength([
+/*                        new PasswordStrength([
                             'minScore'=>4,
                             'message'=>'votre mot de passe est trop faible. Veuillez inclure des lettres, deschiffres et des symboles.'
-                        ])
+                        ])*/
                     ])
                 ],
             ])
@@ -125,6 +126,15 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
+            ->add('avatar',FileType::class,['attr'=>['class'=>'block w-full text-sm text-gray-900 border 
+            border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700
+             dark:border-gray-600 dark:placeholder-gray-400'],
+            'multiple'=>false,
+            'mapped'=>false,
+            'required'=>true,
+            'label'=>'Avatar',
+            'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
+        ])
             ->add('agreeTerms', CheckboxType::class, [
                 'attr' => [
                     'class' => 'w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 

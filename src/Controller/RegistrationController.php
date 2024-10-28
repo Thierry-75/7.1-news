@@ -2,18 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Avatar;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Service\IntraController;
 use App\Service\JWTService;
+use App\Service\PhotoService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -25,13 +26,20 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
         SendMailService $mail,
-        JWTService $jwt
+        JWTService $jwt,
+        PhotoService $photoService
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         if ($request->isMethod('POST')) {
             if ($form->isSubmitted() && $form->isValid()) {
+                $image = $form->get('avatar')->getData();
+                $folder = 'inscrits';
+                $fichier = $photoService->add($image,$folder,300,300);
+                $avatar = new Avatar();
+                $avatar->setName($fichier);
+                $user->setAvatar($avatar);
                 // encode the plain password
                 $user->setPassword(
                     $userPasswordHasher->hashPassword(

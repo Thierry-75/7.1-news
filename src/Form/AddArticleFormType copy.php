@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Keyword;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
@@ -14,13 +15,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Sequentially;
-
+use Webmozart\Assert\Assert;
 
 class AddArticleFormType extends AbstractType
 {
@@ -49,16 +49,30 @@ class AddArticleFormType extends AbstractType
                 'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints'=>[new NotBlank(message:'')]
                 ])
-            ->add('photos',FileType::class,['attr'=>['class'=>'block w-full text-sm text-gray-900 border 
+            ->add('featuredImage',FileType::class,['attr'=>['class'=>'block w-full text-sm text-gray-900 border 
             border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700
              dark:border-gray-600 dark:placeholder-gray-400'],
             'label'=>false,
-            'multiple'=>true,
             'mapped'=>false,
-            'required'=>true,
-            'label'=>'Photos d\'illustration',
+            'required'=>false,
+            'label'=>'Photo d\'illustration',
             'label_attr'=>['class'=>'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
-            
+            'constraints'=>[
+                new Image([
+                    'maxSize'=>'5M',
+                    'mimeTypes'=> [
+                        'image/jpeg',
+                        'image/png'
+                    ],
+                    'mimeTypesMessage'=>'Veuillez télécharger une image aui format JPEG ou PNG',
+                    'minWidth'=>200,
+                    'maxWidth'=>4000,
+                    'minHeight'=>200,
+                    'maxHeight'=>4000,
+                    'allowPortrait'=>false,
+                    'allowLandscape'=>true
+                ]),
+            ]
           
         ])
             ->add('category', EntityType::class,['attr'=>[ 'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 

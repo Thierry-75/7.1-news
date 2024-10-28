@@ -36,6 +36,7 @@ return [
     'add-article'=>[
         'path' => './assets/js/add_article.js',
         'entrypoint' => true,
-    ]
+    ],
+
 
 ];

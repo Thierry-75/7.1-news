@@ -3,8 +3,8 @@
 namespace App\Controller\Profile;
 
 use App\Entity\Article;
+use App\Entity\Photo;
 use App\Form\AddArticleFormType;
-use App\Repository\UserRepository;
 use App\Service\PhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,9 +46,14 @@ class ArticleController extends AbstractController
                 $slug = strtolower($slugger->slug($article->getTitre()));
                 $article->setSlug($slug);
                 $article->setUser($this->getUser());
-                $featuredImage = $articleForm->get('featuredImage')->getData();
-                $image = $photoService->add($featuredImage,'articles',640,480);
-                $article->setFeaturedImage($image);
+                $photos = $articleForm->get('photos')->getData();
+                foreach($photos as $photo){
+                    $folder ='articles';
+                    $fichier = $photoService->add($photo,$folder,640,480);
+                    $image = new Photo();
+                    $image->setName($fichier);
+                    $article->addPhoto($image);
+                }
                 $em->persist($article);
                 $em->flush();
                 $this->addFlash('alert-success','L\'article a bien été créé');

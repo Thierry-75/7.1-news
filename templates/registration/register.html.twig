@@ -70,6 +70,14 @@
             <small id="citySmall"></small>
           </div>
         </div>
+                <div>
+          {{ form_label(registrationForm.avatar) }}
+          {{ form_widget(registrationForm.avatar) }}
+          <div class="text-sm text-red-700">
+            {{ form_errors(registrationForm.avatar) }}
+            <small id="citySmall"></small>
+          </div>
+        </div>
         <div class="flex items-start">
           <div class="flex items-center h-5">
             {{ form_widget(registrationForm.agreeTerms) }}
