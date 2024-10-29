@@ -26,7 +26,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        for($j=0; $j < 24; $j++){
+        for($j=0; $j < 5; $j++){
         $post = new Article();
         $post->setTitre($this->faker->sentence())
             ->setSlug(strtolower($this->slugger->slug($post->getTitre())))

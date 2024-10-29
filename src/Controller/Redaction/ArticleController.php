@@ -5,7 +5,6 @@ namespace App\Controller\Redaction;
 use App\Entity\Article;
 use App\Entity\Photo;
 use App\Form\AddArticleFormType;
-use App\Repository\ArticleRepository;
 use App\Service\PhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\Filesystem\Filesystem;
 
 #[Route('/redaction/article',name:'app_profile_article_')]
 class ArticleController extends AbstractController
@@ -72,6 +71,7 @@ class ArticleController extends AbstractController
     #[Route('/update/{id}',name:'update',methods:['GET','POST'])]
     public function updateArticle(
         Article $article,
+        Photo $photo,
         EntityManagerInterface $em,
         Request $request, 
         ValidatorInterface $validator,
@@ -91,6 +91,13 @@ class ArticleController extends AbstractController
                 return $this->render('redaction/article/update.html.twig',['form'=>$form->createView(),'errors'=>$errors]);
             }
             if($form->isSubmitted() && $form->isValid()){
+                $folder="articles";
+                $photos= $article->getPhotos();
+                foreach($photos as $photo ){
+                    $photoService->delete($photo->getName(),$folder,640,480);
+                    $em->remove($photo);
+                }
+                $em->flush();    
                 $slug = strtolower($slugger->slug($article->getTitre()));
                 $article->setSlug($slug);
                 $article->setUser($this->getUser());

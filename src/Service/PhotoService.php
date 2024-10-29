@@ -90,21 +90,22 @@ class PhotoService
     {
         if($fichier !== 'default.webp'){
             $success = false;
-            $path = $this->params->get('images_directory') . $folder;
+            $path = $this->params->get('image_directory') . $folder;
+            
 
+            $original = $path . '/' . $fichier;
+            if(file_exists($original)){
+                unlink($original);
+                $success = true;
+            }
+            
             $mini = $path . '/mini/' . $width . 'x' . $height . '-' . $fichier;
-
             if(file_exists($mini)){
                 unlink($mini);
                 $success = true;
             }
 
-            $original = $path . '/' . $fichier;
 
-            if(file_exists($original)){
-                unlink($original);
-                $success = true;
-            }
             return $success;
         }
         return false;
