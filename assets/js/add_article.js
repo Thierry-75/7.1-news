@@ -1,4 +1,4 @@
-//document.querySelector("#add_article_form_featuredImage").addEventListener("change", checkFile);
+
 document.querySelector("#update_profil_form_avatar").addEventListener("change", checkFile);
 
 function checkFile(){
