@@ -1,0 +1,28 @@
+
+
+
+			<h1 class="text-xl text-center font-bold leading-tight tracking-tight text-cyan-400 md:text-2xl dark:text-white">Supprimer le tag: {{ keyword.name }}</h1>
+			<div>
+				<p class="text-red-500 mt-6 text-center text-sm" id='message_form_register'>&nbsp;</p>
+			</div>
+			{{ form_start(form, {
+				  attr: {
+					novalidate: "novalidate",
+					class: "space-y-4 md:space-y-6",
+					id: "keyword_add_form"
+				  }
+				})
+			  }}
+			<div class="mt-8 grid lg:grid-cols-2 gap-4">
+				<div class="w-full max-w-sm min-w-[200px]">
+					{{ form_label(form.name)}}
+					{{ form_widget(form.name)}}
+					{{ form_errors(form.name)}}
+				</div>
+			</div>
+			<div class="mt-8 grid lg:grid-cols-2 gap-4">
+				<div>
+					<button class="w-25 btn-warning ml-96 " type="submit">Supprimer</button>
+				</div>
+			</div>
+			{{ form_end(form)}}

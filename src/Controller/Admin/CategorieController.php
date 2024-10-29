@@ -16,11 +16,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('admin/categorie',name:'app_admin_categorie_')]
 class CategorieController extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(): Response
+    #[Route('/all', name: 'index')]
+    public function index(EntityManagerInterface $em): Response
     {
+        $Categories = $em->getRepository(Category::class)->findAll([''],['name'=>'desc']);
         return $this->render('admin/categorie/index.html.twig', [
-            'controller_name' => 'CategorieController',
+            'categories'=>$Categories
         ]);
     }
 
@@ -48,5 +49,21 @@ class CategorieController extends AbstractController
         return $this->render('admin/categorie/add.html.twig', [
             'categoryForm'=>$categoryForm->createView()
         ]);
+    }
+
+    #[Route('/delete/{id}',name:'delete',methods:['GET','POST'])]
+    public function deleteCategory(Category $category,Request $request,EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(AddCategoryFormType::class,$category);
+        $form->handleRequest($request);
+        if($request->isMethod('POST')){
+            if($form->isSubmitted() && $form->isValid()){
+                $em->remove($category);
+                $em->flush();
+                $this->addFlash('alert-success','La catégorie a bien été supprimée.');
+                return $this->redirectToRoute('app_admin_categorie_index');
+            }
+        }
+        return $this->render('admin/categorie/delete_category.html.twig',['form'=>$form->createView(),'category'=>$category]);
     }
 }
