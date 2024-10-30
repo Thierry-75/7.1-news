@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer un Article
+{% endblock %}
+{% block body %}
+	<div class="container mx-auto px-4">
+		<div class="grid grid-cols-8 gap-4">
+			{% block left %}
+				{% include('redaction/article/side.html.twig') %}
+			{% endblock %}
+			<div class="col-start-3 col-span-4">
+				{% block center %}
+					{% include 'redaction/article/delete_form.html.twig' %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

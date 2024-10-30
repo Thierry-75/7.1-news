@@ -2,7 +2,7 @@
 	
 		<h1 class="text-xl text-center font-bold 
         leading-tight tracking-tight text-red-400
-         md:text-2xl dark:text-white">Modifier l'article : {{ article.titre }}</h1>
+         md:text-2xl dark:text-white">Supprimer l'article : {{ article.titre }}</h1>
 		<div>
 			<p class="text-red-500 mt-1 text-center text-sm" id='message_form_register'>&nbsp;</p>
 		</div>
@@ -10,7 +10,7 @@
 				  attr: {
 					novalidate: "novalidate",
 					class: "space-y-4 md:space-y-6",
-					id: "article_update_form"
+					id: "article_delete_form"
 				  }
 				})
 			  }}
@@ -18,36 +18,31 @@
 		<div class="w-full max-w-sm min-w-[925px]">
 			{{ form_label(form.titre)}}
 			{{ form_widget(form.titre)}}
-			{{ form_errors(form.titre)}}
 		</div>
 
 
 		<div class="w-full max-w-sm min-w-[925px]">
 			{{ form_label(form.contenu)}}
 			{{ form_widget(form.contenu)}}
-			{{ form_errors(form.contenu)}}
 		</div>
 		<div class="w-full max-w-sm min-w-[925px]">
 			{{ form_label(form.category)}}
 			{{ form_widget(form.category)}}
-			{{ form_errors(form.category)}}
 		</div>
 
 		<div class="w-full max-w-sm min-w-[925px]">
 			{{ form_label(form.keyword)}}
 			{{ form_widget(form.keyword)}}
-			{{ form_errors(form.keyword)}}
 		</div>
 		<div class="w-full max-w-sm min-w-[462px]">
-			{{ form_label(form.photos)}}
-			{{ form_widget(form.photos)}}
-			{{ form_errors(form.photos)}}
-			<div class="preview" style="display-none">
-				<img id="imagepreview" width="300" />
-			</div>
+                   {% for image in article.photos %}
+                            <div class="carousel-item {{ (loop.first ) ? 'active' : '' }}">
+                                <p><img src="{{ asset('assets/uploads/articles/mini/640x480-') ~ image.name }}" class="rounded-full w-36 h-36 float-right" alt="{{ article.titre }}"></p>
+                            </div>
+                    {% endfor %}
 		</div>
 		<div>
-			<button class="w-25 btn-warning" type="submit">Modifier</button>
+			<button class="w-25 btn-warning" type="submit">Supprimer</button>
 		</div>
 
 		{{ form_end(form)}}

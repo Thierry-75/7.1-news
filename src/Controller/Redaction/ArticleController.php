@@ -5,6 +5,7 @@ namespace App\Controller\Redaction;
 use App\Entity\Article;
 use App\Entity\Photo;
 use App\Form\AddArticleFormType;
+use App\Repository\ArticleRepository;
 use App\Service\PhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 
 #[Route('/redaction/article',name:'app_profile_article_')]
 class ArticleController extends AbstractController
@@ -109,14 +109,45 @@ class ArticleController extends AbstractController
                     $image->setName($fichier);
                     $article->addPhoto($image);
                 }
-                // remove photos 
-                
+
                 $em->persist($article);
                 $em->flush();
-                $this->addFlash('Alert-succcess','L\'article a étét modifié');
+                $this->addFlash('Alert-succcess','L\'article a été modifié');
                 return $this->redirectToRoute('app_profile_article_show',['id'=>$article->getId()]);
             }
         }
         return $this->render('redaction/article/update.html.twig',['form'=>$form->createView(),'article'=>$article]);
+    }
+
+    #[Route('/delete/{id}',name:'delete',methods:['GET','POST'])]
+    public function deleteArticle(
+        Article $article,
+        EntityManagerInterface $em,
+        Request $request
+        ): Response
+    {
+        if($this->denyAccessUnlessGranted('ROLE_ADMIN')){
+            $this->addFlash('alert-danger','Vous devez être connecté pour accéder à cette page');
+            return $this->redirectToRoute('app_main');
+        }
+        $form = $this->createForm(AddArticleFormType::class,$article);
+        $form->handleRequest($request);
+        if($request->isMethod('POST')){
+                $em->remove($article);
+                $em->flush();
+                $this->addFlash('Alert-succcess','L\'article a été supprimé');
+                return $this->redirectToRoute('app_profile_article_all');
+            
+        }
+        return $this->render('redaction/article/delete.html.twig',['form'=>$form->createView(),'article'=>$article]);
+    }
+
+    #[Route('/all',name:'all',methods:['GET'])]
+    public function allArticle(
+        EntityManagerInterface $em,
+        ): Response
+    {
+        $articles = $em->getRepository(Article::class)->findBY([],['titre'=>'asc']);
+        return $this->render('redaction/article/all.html.twig',['articles'=>$articles]);
     }
 }
