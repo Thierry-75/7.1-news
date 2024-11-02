@@ -5,7 +5,6 @@ namespace App\Controller\Redaction;
 use App\Entity\Article;
 use App\Entity\Photo;
 use App\Form\AddArticleFormType;
-use App\Repository\ArticleRepository;
 use App\Service\PhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;

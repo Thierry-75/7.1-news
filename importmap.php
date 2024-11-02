@@ -37,6 +37,10 @@ return [
         'path' => './assets/js/add_article.js',
         'entrypoint' => true,
     ],
+    'ckeditor-init'=>[
+        'path'=>'./assets/js/ckeditor-init.js',
+        'entrypoint'=>true,
+    ]
 
 
 ];
